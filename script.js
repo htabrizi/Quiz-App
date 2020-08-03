@@ -22,10 +22,12 @@ removeQuestionCollection:function(){
   };
   return {
     addQuestionOnLocalStorage: function (newQuestText, opts) {
-      var optionsArr, corrAns, questionId, newQuestion;
+      var optionsArr, corrAns, questionId, newQuestion, getStoredQuests;
+      if(questionLocalStorage.getQuestionCollection()===null){
+        questionLocalStorage.setQuestionCollection([]);
+      }
       optionsArr = [];
-      questionId = 0;
-
+ 
       for (var i = 0; i < opts.length; i++) {
         if (opts[i].value !== "") {
           optionsArr.push(opts[i].value);
@@ -33,9 +35,18 @@ removeQuestionCollection:function(){
         if (opts[i].previousElementSilbling.checked && opts[i].value !== "") {
           corrAns = opts[i].value;
         }
+      } 
+      //[{id: 0} {id: 0}]
+      if(questionLocalStorage.getQuestionCollection().length>0){
+        questionId=questionLocalStorage.getQuestionCollection()[questionLocalStorage.getQuestionCollection().length-1].id+1;
+      }else{
+        questionId=0;
       }
       newQuestion = new Question(questionId, newQuestionText.value, optionsArr, corrAns);
-      console.log(newQuestion);
+      getStoredQuests =questionLocalStorage.getQuestionCollection();
+      getStoredQuests.push(newQuestion);
+      questionLocalStorage.setQuestionCollection(getStoredQuests);
+      console.log(questionLocalStorage.getQuestionCollection());
     }
   };
 })();
