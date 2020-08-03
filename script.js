@@ -9,23 +9,34 @@ var quizController = (function () {
     this.options = options;
     this.correctAnswer = correctAnswer;
   }
+  var questionLocalStorage = {
+    setQuestionCollection: function (newCollection) {
+      localStorage.setItem('questionCollection', JSON.stringify(newCollection));
+    },
+    getQuestionCollection: function () {
+      return JSON.parse(localStorage.getItem('questionCollection'));
+    },
+removeQuestionCollection:function(){
+  localStorage.removeItem('questionCollection');
+}
+  };
   return {
     addQuestionOnLocalStorage: function (newQuestText, opts) {
-      var optionsArr,corrAns, questionId,newQuestion ;
-          optionsArr = [];
-      questionId=0;
+      var optionsArr, corrAns, questionId, newQuestion;
+      optionsArr = [];
+      questionId = 0;
 
       for (var i = 0; i < opts.length; i++) {
         if (opts[i].value !== "") {
           optionsArr.push(opts[i].value);
         }
-        if(opts[i].previousElementSilbling.checked && opts[i].value!== ""){
-corrAns=opts[i].value;
+        if (opts[i].previousElementSilbling.checked && opts[i].value !== "") {
+          corrAns = opts[i].value;
         }
       }
-      newQuestion=new Question(questionId,newQuestionText.value,optionsArr,corrAns);
+      newQuestion = new Question(questionId, newQuestionText.value, optionsArr, corrAns);
       console.log(newQuestion);
-}
+    }
   };
 })();
 /**********************************
