@@ -58,7 +58,7 @@ var quizController = (function () {
 
             }
             console.log(questionLocalStorage.getQuestionCollection());
-          } else {
+          } else { 
             alert('You missed to check correctly answer,or you checked answer without value.')
           }
         } else {
